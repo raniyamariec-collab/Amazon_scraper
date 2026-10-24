@@ -1,0 +1,16 @@
+# Environnement virtuel
+
+venv/
+
+# Fichiers Python temporaires
+
+**pycache**/
+*.py[cod]
+
+# Fichiers générés par les tests
+
+exports/test_produits.csv
+
+# Base de données générée localement
+
+data/amazon.db
