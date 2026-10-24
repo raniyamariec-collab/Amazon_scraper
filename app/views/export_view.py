@@ -1,16 +1,15 @@
-
 import csv
 from pathlib import Path
-
+ 
 BASE_DIR = Path(__file__).resolve().parents[2]
 DOSSIER_EXPORT = BASE_DIR / "exports"
-
-
+ 
+ 
 def exporter_csv(produits, nom_fichier="produits_amazon.csv"):
-    """Exporte une liste de produits dans un fichier CSV."""
+    """Exporte une liste de produits dans un fichier CSV (compatible Excel FR)."""
     DOSSIER_EXPORT.mkdir(parents=True, exist_ok=True)
     chemin_fichier = DOSSIER_EXPORT / nom_fichier
-
+ 
     with open(
         chemin_fichier,
         mode="w",
@@ -18,9 +17,10 @@ def exporter_csv(produits, nom_fichier="produits_amazon.csv"):
         encoding="utf-8-sig"
     ) as fichier:
         champs = ["nom", "prix", "lien", "vendeur"]
-        writer = csv.DictWriter(fichier, fieldnames=champs)
+        # Point-virgule : séparateur attendu par Excel en version française
+        writer = csv.DictWriter(fichier, fieldnames=champs, delimiter=";")
         writer.writeheader()
-
+ 
         for produit in produits:
             writer.writerow({
                 "nom": produit.nom,
@@ -28,6 +28,6 @@ def exporter_csv(produits, nom_fichier="produits_amazon.csv"):
                 "lien": produit.lien,
                 "vendeur": produit.vendeur
             })
-
+ 
     print(f"Export CSV réussi : {chemin_fichier}")
-
+ 
